@@ -29,7 +29,6 @@ export const Checkout = () => {
   function deleteHandler(id) {
     console.log('test', id);
     const newCart = cart.filter((item) => item.id !== id);
-    newCart.filter((item) => item.id !== id);
     setCart(newCart);
     console.log('radi', cart);
   }
