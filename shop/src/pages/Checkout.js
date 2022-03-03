@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Header } from '../components/Header';
 import { useRecoilState } from 'recoil';
 import { cartState, totalState } from '../atoms/cartAtom';
@@ -6,8 +6,30 @@ import { cartState, totalState } from '../atoms/cartAtom';
 export const Checkout = () => {
   const [cart, setCart] = useRecoilState(cartState);
   const [totalCart, setTotalCart] = useRecoilState(totalState);
-  const [selectedItem, setSelectedItem] = useState({});
-  const [selectedQuantityChange, setSelectedQuantity] = useState(1);
+
+  const getCart = () => {
+    const subTotal = cart.reduce((total, product) => {
+      return total + product.price * +product.selectedQuantity;
+    }, 0);
+    setTotalCart(subTotal);
+  };
+
+  function deleteHandler(id) {
+    const newCart = cart.filter((item) => item.id !== id);
+    setCart(newCart);
+  }
+
+  const quantityHandler = (e, item) => {
+    const updatedData = cart.map((x) =>
+      x.id === item.id ? { ...x, selectedQuantity: e.target.value } : x
+    );
+    const subTotal = updatedData.reduce((total, product) => {
+      return total + product.price * +product.selectedQuantity;
+    }, 0);
+    setCart(updatedData);
+    return setTotalCart(subTotal);
+  };
+
   useEffect(() => {
     getCart();
   }, [totalCart, cart]);
@@ -19,31 +41,6 @@ export const Checkout = () => {
     return a;
   }
 
-  const getCart = () => {
-    const subTotal = cart.reduce((total, product) => {
-      return total + product.price * +product.selectedQuantity;
-    }, 0);
-    setTotalCart(subTotal);
-  };
-
-  function deleteHandler(id) {
-    console.log('test', id);
-    const newCart = cart.filter((item) => item.id !== id);
-    setCart(newCart);
-    console.log('radi', cart);
-  }
-
-  const quantityHandler = (e, item) => {
-    const updatedData = cart.map((x) =>
-      x.id === item.id ? { ...x, selectedQuantity: e.target.value } : x
-    );
-    const subTotal = updatedData.reduce((total, product) => {
-      return total + product.price * +product.selectedQuantity;
-    }, 0);
-    console.log('subTotal: ' + subTotal);
-    setCart(updatedData);
-    return setTotalCart(subTotal);
-  };
   return (
     <div>
       <Header />
@@ -106,7 +103,7 @@ export const Checkout = () => {
                             </select>
                           </div>
                           <div onClick={() => deleteHandler(item.id)}>
-                            <a className="btn">Delete</a>
+                            <p className="btn">Delete</p>
                           </div>
                         </div>
                       ))}

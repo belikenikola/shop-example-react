@@ -1,5 +1,4 @@
 import React from 'react';
-import noImg from '../assets/Noimg.jpg';
 import { Link } from 'react-router-dom';
 
 function ItemCard({ item }) {

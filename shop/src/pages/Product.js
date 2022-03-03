@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Header } from '../components/Header';
-import ItemCard from '../components/ItemCard';
 import data from '../data/data.json';
 import { useRecoilState } from 'recoil';
 import { cartState } from '../atoms/cartAtom';
@@ -24,7 +23,7 @@ const Product = () => {
     } else {
       alert('There is no product with id:' + id);
     }
-  }, [id, items]);
+  }, [id, items, setProduct]);
 
   const optionHandler = (e) => {
     let filteredOption = options.filter((o) => o.color === e.target.value);
@@ -65,8 +64,6 @@ const Product = () => {
       quantity: selectedQuantity,
     });
   };
-
-  console.log('cart', cart);
 
   return (
     <div>
