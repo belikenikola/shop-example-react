@@ -32,7 +32,7 @@ export const Checkout = () => {
 
   useEffect(() => {
     getCart();
-  }, [totalCart, cart, getCart]);
+  }, [totalCart, cart]);
   function makeArr(item) {
     var a = [];
     for (var i = 0; i < item; i++) {
