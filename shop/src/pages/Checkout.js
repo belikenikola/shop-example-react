@@ -32,7 +32,7 @@ export const Checkout = () => {
 
   useEffect(() => {
     getCart();
-  }, [totalCart, cart]);
+  }, [totalCart, cart, getCart]);
   function makeArr(item) {
     var a = [];
     for (var i = 0; i < item; i++) {
@@ -78,9 +78,9 @@ export const Checkout = () => {
                       </div>
                     </div>
                     <div>
-                      {cart.map((item) => (
+                      {cart.map((item, index) => (
                         <div
-                          key={item.id}
+                          key={index}
                           className="flex justify-between border-t-2 text-sm font-normal mt-4 space-x-4"
                         >
                           <div className="px-2">
