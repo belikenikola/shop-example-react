@@ -14,8 +14,8 @@ export const Checkout = () => {
     setTotalCart(subTotal);
   };
 
-  function deleteHandler(id) {
-    const newCart = cart.filter((item) => item.id !== id);
+  function deleteHandler(i) {
+    const newCart = cart.filter((item, index) => i !== index);
     setCart(newCart);
   }
 
@@ -102,7 +102,7 @@ export const Checkout = () => {
                               ))}
                             </select>
                           </div>
-                          <div onClick={() => deleteHandler(item.id)}>
+                          <div onClick={() => deleteHandler(index)}>
                             <p className="btn">Delete</p>
                           </div>
                         </div>
